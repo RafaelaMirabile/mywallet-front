@@ -53,7 +53,6 @@ export default function InflowPage(){
             setDescricao("");
             setInputState(false);
             setLoading(true);
-            console.log(loading);
         })
         .catch(()=>{
             setInputState(false);
@@ -72,7 +71,8 @@ export default function InflowPage(){
                 <InputFilds onSubmit={inflowRequest}>
                     <IntlCurrencyInput disabled={inputState} currency="BRL" config={currencyConfig} onChange={e=> setValor(e.target.value)} />
                     <input disabled={inputState} required type="text" placeholder="Descrição" value={descricao} onChange={e=> setDescricao(e.target.value)}></input>
-                    {loading ? <button type="submit">Salvar entrada</button>: <button><ThreeDots color="#FFFFFF" height={20} width={50}/></button>}                  
+                    {loading ? <button type="submit">Salvar entrada</button>: 
+                    <button><ThreeDots color="#FFFFFF" height={20} width={50}/></button>}                  
                 </InputFilds>
             </Box>
         </PageContainer>

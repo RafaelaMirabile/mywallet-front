@@ -51,7 +51,6 @@ export default function OutflowPage(){
             setDescricao("");
             setInputState(false);
             setLoading(true);
-            console.log(loading);
         })
         .catch(()=>{
             setInputState(false);
@@ -63,7 +62,7 @@ export default function OutflowPage(){
         <PageContainer>
             <Box>
                 <Header>
-                Nova saída
+                Nova saída lalalal{loading }
                 <ion-icon onClick={()=>{navigate('/cashflow')}} name="home"></ion-icon>
                 </Header>
                 <InputFilds onSubmit={outFlowRequest}>

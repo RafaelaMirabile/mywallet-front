@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState} from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import Swal from "sweetalert2";
@@ -12,11 +13,13 @@ export default function CashFlowPage(){
     const [userTransitions,setUserTransitions]=useState([]);
     const [balance,setBalance]=useState("");
     const [balanceColor,setBalanceColor]=useState("");
+    const [loading, setLoading]=useState(true);
     
     useEffect(()=>{
         
         getCashFlow(userToken).then((cash) => {
             setUserTransitions(cash.data);
+            setLoading(false);
             const positive = cash.data.filter(value => value.cashFlowType === "inflow");
             const negative = cash.data.filter(value => value.cashFlowType === "outflow");
             let count = 0;
@@ -39,8 +42,13 @@ export default function CashFlowPage(){
             }
             
         }).catch((error)=>{
-            console.log(error); /*ARRUMAR ISSO COLOCAR UM
-            SWAL DE SAIR DA SESSOA POR NAO ESTAR AUTORIZADO*/
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: '401',
+                text: 'Requisição não autorizada',
+              });
+              navigate("/");
         });
     },[])
 
@@ -75,30 +83,33 @@ export default function CashFlowPage(){
                    Olá, {userName}
                    <ion-icon onClick={exitSession} name="exit-outline"></ion-icon>
                 </Header>
-                <RegistrationBox>
-                    <TransitionBox>                    
-                    {userTransitions.length === 0 ? <Warning>Não há registros de entrada ou saída</Warning> :
-                    userTransitions.map((transition,index) =>
-                        <Transition key={index}>
-                            <TransitionInfo>
-                                <span>{transition.date}</span>
-                                <TransitionDescription>
-                                    {transition.description}
-                                </TransitionDescription>                            
-                            </TransitionInfo>
-                            <TransitionValue style={transition.cashFlowType === 'inflow'? {color:"green"}: {color:"red"}}>
-                                {reformattingTransitionValue(transition.value)}
-                            </TransitionValue>
-                        </Transition>
-                    )} 
-                    </TransitionBox>
-                    <Balance>
-                        <p>SALDO</p>
-                        <BalanceValue style={balanceColor ? {color:"green"}: {color:"red"}}>
-                            {balance}
-                        </BalanceValue>
-                    </Balance>
-                </RegistrationBox>
+                {loading ? <Loading><ThreeDots color="#FFFFFF" height={20} width={50}/></Loading> : 
+                    <RegistrationBox>
+                        <TransitionBox>                    
+                           {userTransitions.length === 0 ? <Warning>Não há registros de entrada ou saída</Warning> :
+                            userTransitions.map((transition,index) =>
+                            <Transition key={index}>
+                                <TransitionInfo>
+                                    <span>{transition.date}</span>
+                                    <TransitionDescription>
+                                            {transition.description}
+                                    </TransitionDescription>                            
+                                </TransitionInfo>
+                                <TransitionValue style={transition.cashFlowType === 'inflow'? {color:"green"}: {color:"red"}}>
+                                    {reformattingTransitionValue(transition.value)}
+                                </TransitionValue>
+                            </Transition>
+                            )} 
+                        </TransitionBox>
+                            <Balance>
+                                <p>SALDO</p>
+                                <BalanceValue style={balanceColor ? {color:"green"}: {color:"red"}}>
+                                    {balance}
+                                </BalanceValue>
+                            </Balance>
+                    </RegistrationBox>
+                
+                }
                 <ActionsBox>
                     <Inflow onClick={()=>{navigate("/inflow")}}>
                         <ion-icon name="add-circle-outline"></ion-icon>
@@ -277,4 +288,9 @@ span{
     line-height: 19px;
     color: #C6C6C6;
 }
+`
+const Loading = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
 `
