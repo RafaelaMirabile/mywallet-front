@@ -65,7 +65,7 @@ export default function OutflowPage(){
         <PageContainer>
             <Box>
                 <Header>
-                Nova saída lalalal{loading }
+                Nova saída
                 <ion-icon onClick={()=>{navigate('/cashflow')}} name="home"></ion-icon>
                 </Header>
                 <InputFilds onSubmit={outFlowRequest}>
