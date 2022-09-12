@@ -54,11 +54,11 @@ export default function InflowPage(){
             setInputState(false);
             setLoading(true);
         })
-        .catch(()=>{
+        .catch((error)=>{
             setInputState(false);
             setLoading(true);
-            console.log('n inu')});
-
+            console.error(error);
+        });
     }
 
     return(

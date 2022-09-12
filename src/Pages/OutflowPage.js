@@ -51,11 +51,14 @@ export default function OutflowPage(){
             setDescricao("");
             setInputState(false);
             setLoading(true);
+            console.log(loading);
         })
-        .catch(()=>{
+        .catch((error)=>{
             setInputState(false);
-            console.log('n inu')});
+            console.error(error);
             setLoading(true);
+            console.log(loading);        
+        });
     }
 
     return(
