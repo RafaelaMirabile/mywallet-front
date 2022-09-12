@@ -80,9 +80,12 @@ export default function CashFlowPage(){
                     {userTransitions.length === 0 ? <Warning>Não há registros de entrada ou saída</Warning> :
                     userTransitions.map((transition,index) =>
                         <Transition key={index}>
-                            <TransitionDescription>
-                                {transition.description}
-                            </TransitionDescription>
+                            <TransitionInfo>
+                                <span>{transition.date}</span>
+                                <TransitionDescription>
+                                    {transition.description}
+                                </TransitionDescription>                            
+                            </TransitionInfo>
                             <TransitionValue style={transition.cashFlowType === 'inflow'? {color:"green"}: {color:"red"}}>
                                 {reformattingTransitionValue(transition.value)}
                             </TransitionValue>
@@ -90,7 +93,7 @@ export default function CashFlowPage(){
                     )} 
                     </TransitionBox>
                     <Balance>
-                        <p>Saldo</p>
+                        <p>SALDO</p>
                         <BalanceValue style={balanceColor ? {color:"green"}: {color:"red"}}>
                             {balance}
                         </BalanceValue>
@@ -118,7 +121,6 @@ export default function CashFlowPage(){
 }
 
 const PageContainer=styled.div`
-border: 2px solid green;
 min-height: 100vh;
 background-image: linear-gradient( to top right,#441E5A,#483289 );
 display: flex;
@@ -126,7 +128,6 @@ align-items: center;
 justify-content: center;
 `
 const Box = styled.div`
-border: 2px solid yellow;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -134,7 +135,6 @@ height: 92vh;
 width: 90%;
 `
 const Header = styled.div`
-border: 2px solid red;
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 700;
@@ -149,7 +149,6 @@ font-size: 36px;
 }
 `
 const RegistrationBox = styled.div`
-border: 2px solid green;
 width: 100%;
 min-height: 410px;
 background: #FFFFFF;
@@ -160,14 +159,13 @@ flex-direction: column;
 justify-content: space-between;
 `
 const ActionsBox=styled.div`
-border: 2px solid gray;
 display: flex;
 justify-content: space-around;
 `
 const Inflow=styled.div`
-border: 2px solid black;
 width: 155px;
 height: 114px;
+margin-right: 10px;
 background: #483289;
 border-radius: 5px;
 font-family: Raleway;
@@ -187,7 +185,6 @@ ion-icon{
 }
 `
 const Outflow=styled.div`
-border: 2px solid pink;
 width: 155px;
 height: 114px;
 background: #483289;
@@ -210,13 +207,11 @@ ion-icon{
 }
 `
 const Transition = styled.div`
-border: 2px solid pink;
 display: flex;
 justify-content: space-between;
-padding: 2px;
+padding: 4px;
 `
 const TransitionDescription=styled.div`
-border: 2px solid red;
 font-family: Raleway;
 font-style: normal;
 font-weight: 400;
@@ -225,7 +220,6 @@ line-height: 19px;
 color: #000000;
 `
 const TransitionValue=styled.div`
-border: 2px solid yellow;
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 400;
@@ -233,10 +227,10 @@ font-size: 16px;
 line-height: 19px;
 `
 const Balance = styled.div`
-border: 2px solid red ;
 display: flex;
 justify-content: space-between;
 align-items: center;
+padding: 4px;
 p{
     font-family: Raleway;
     font-style: normal;
@@ -267,6 +261,20 @@ margin-top: 60px;
 border: 2px solid green;
 `
 const TransitionBox=styled.div`
-border: 2px solid red;
 height: 440px;
+`
+const TransitionInfo= styled.div`
+
+display: flex;
+justify-content: center;
+align-items: center;
+span{
+    margin-right: 4px;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #C6C6C6;
+}
 `

@@ -5,6 +5,7 @@ import { postInflow } from "../service/API";
 import UserContext from "../context/UserContext";
 import IntlCurrencyInput from "react-intl-currency-input"
 import { ThreeDots } from "react-loader-spinner";
+import dayjs from "dayjs";
 
 const currencyConfig = {
     locale: "pt-BR",
@@ -43,7 +44,8 @@ export default function InflowPage(){
             userId: userId,
             description : descricao,
             value: newValor,
-            cashFlowType : 'inflow'
+            cashFlowType : 'inflow',
+            date:dayjs().format('DD/MM')
         }
 
         postInflow(userToken,body).then(()=> {
@@ -78,7 +80,6 @@ export default function InflowPage(){
 }
 
 const PageContainer = styled.div`
-border: 2px solid green;
 min-height: 100vh;
 background-image: linear-gradient( to top right,#441E5A,#483289 );
 display: flex;
@@ -86,14 +87,12 @@ align-items: center;
 justify-content: center;
 `
 const Box= styled.div`
-border: 2px solid yellow;
 display: flex;
 flex-direction: column;
 height: 92vh;
 width: 90%;
 `
 const Header=styled.div`
-border: 2px solid red;
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 700;
@@ -108,7 +107,6 @@ font-size: 36px;
 }
 `
 const InputFilds = styled.form`
-border: 2px solid gray;
 display: flex;
 justify-content: center;
 align-items: center;

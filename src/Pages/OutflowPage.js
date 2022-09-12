@@ -1,10 +1,11 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { postInflow } from "../service/API";
+import { postOutflow } from "../service/API";
 import UserContext from "../context/UserContext";
 import IntlCurrencyInput from "react-intl-currency-input"
 import { ThreeDots } from "react-loader-spinner";
+import dayjs from "dayjs";
 
 const currencyConfig = {
     locale: "pt-BR",
@@ -29,7 +30,7 @@ export default function OutflowPage(){
     const [inputState,setInputState]=useState(false);
     const [loading,setLoading]=useState(true);
     
-    function inflowRequest(e){
+    function outFlowRequest(e){
         e.preventDefault();
         setInputState(true);
         setLoading(false);
@@ -41,10 +42,11 @@ export default function OutflowPage(){
             userId: userId,
             description : descricao,
             value: newValor,
-            cashFlowType : 'outflow'
+            cashFlowType : 'outflow',
+            date: dayjs().format('DD/MM')
         }
 
-        postInflow(userToken,body).then(()=> {
+        postOutflow(userToken,body).then(()=> {
             setValor("");
             setDescricao("");
             setInputState(false);
@@ -64,10 +66,10 @@ export default function OutflowPage(){
                 Nova saída
                 <ion-icon onClick={()=>{navigate('/cashflow')}} name="home"></ion-icon>
                 </Header>
-                <InputFilds onSubmit={inflowRequest}>
+                <InputFilds onSubmit={outFlowRequest}>
                     <IntlCurrencyInput disabled={inputState} currency="BRL" config={currencyConfig} onChange={e=> setValor(e.target.value)} />
                     <input disabled={inputState} required type="text" placeholder="Descrição" value={descricao} onChange={e=> setDescricao(e.target.value)}></input>
-                    {loading? <button type="submit">Salvar saída</button>:<button><ThreeDots color="#FFFFFF" height={20} width={50}/></button>}                 
+                    {loading ? <button type="submit">Salvar saída</button>:<button><ThreeDots color="#FFFFFF" height={20} width={50}/></button>}                 
                 </InputFilds>
             </Box>
         </PageContainer>
@@ -75,7 +77,6 @@ export default function OutflowPage(){
 }
 
 const PageContainer = styled.div`
-border: 2px solid green;
 min-height: 100vh;
 background-image: linear-gradient( to top right,#441E5A,#483289 );
 display: flex;
@@ -83,14 +84,12 @@ align-items: center;
 justify-content: center;
 `
 const Box= styled.div`
-border: 2px solid yellow;
 display: flex;
 flex-direction: column;
 height: 92vh;
 width: 90%;
 `
 const Header=styled.div`
-border: 2px solid red;
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 700;
@@ -105,7 +104,6 @@ font-size: 36px;
 }
 `
 const InputFilds = styled.form`
-border: 2px solid gray;
 display: flex;
 justify-content: center;
 align-items: center;

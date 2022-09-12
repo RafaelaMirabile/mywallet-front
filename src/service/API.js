@@ -31,7 +31,14 @@ function postInflow(userToken,body){
     const promise = axios.post(`${URL_BASE}/inflow`,body,config);
     return promise
 }
+function postOutflow(userToken,body){
+    const config ={
+        headers:{
+            Authorization : `Bearer ${userToken}`
+        }
+    }
+    const promise = axios.post(`${URL_BASE}/outflow`,body,config);
+    return promise
+}
 
-
-
-export{postLogin, postSignUp,getCashFlow,postInflow}
+export{postLogin, postSignUp,getCashFlow,postInflow,postOutflow}
