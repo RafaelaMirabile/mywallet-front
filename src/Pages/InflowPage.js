@@ -10,69 +10,81 @@ import dayjs from "dayjs";
 const currencyConfig = {
     locale: "pt-BR",
     formats: {
-      number: {
-        BRL: {
-          style: "currency",
-          currency: "BRL",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+        number: {
+            BRL: {
+                style: "currency",
+                currency: "BRL",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            },
         },
-      },
     },
-  };
- 
+};
 
-export default function InflowPage(){
-    
-    const{userToken,userId}=useContext(UserContext);
-    const navigate= useNavigate();  
-    
-    const[valor,setValor]=useState("");
-    const [descricao,setDescricao]=useState("");
-    const [inputState,setInputState]=useState(false);
-    const [loading,setLoading]=useState(true);
-    
-    function inflowRequest(e){
+
+export default function InflowPage() {
+
+    const { userToken, userId } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const [valor, setValor] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [inputState, setInputState] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    function inflowRequest(e) {
         e.preventDefault();
         setInputState(true);
         setLoading(false);
-        
-        const newValor = valor.split("").splice(3).filter(value=> value !== ",").join("");       
-        
-        const body ={
+
+        const newValor = valor.split("").splice(3).filter(value => value !== ",").join("");
+
+        const body = {
             token: userToken,
             userId: userId,
-            description : descricao,
+            description: descricao,
             value: newValor,
-            cashFlowType : 'inflow',
-            date:dayjs().format('DD/MM')
+            cashFlowType: 'inflow',
+            date: dayjs().format('DD/MM')
         }
 
-        postInflow(userToken,body).then(()=> {
+        postInflow(userToken, body).then(() => {
             setValor("");
+            /* AQUI*/
             setDescricao("");
             setInputState(false);
             setLoading(true);
         })
-        .catch((error)=>{
-            setInputState(false);
-            setLoading(true);
-            console.error(error);
-        });
+            .catch((error) => {
+                setInputState(false);
+                setLoading(true);
+                console.error(error);
+            });
     }
 
-    return(
+    return (
         <PageContainer>
             <Box>
                 <Header>
-                Nova entrada
-                <ion-icon onClick={()=>{navigate('/cashflow')}} name="home"></ion-icon>
+                    Nova entrada
+                    <ion-icon onClick={() => { navigate('/cashflow') }} name="home"></ion-icon>
                 </Header>
                 <InputFilds onSubmit={inflowRequest}>
-                    <IntlCurrencyInput disabled={inputState} currency="BRL" config={currencyConfig} onChange={e=> setValor(e.target.value)} />
-                    <input disabled={inputState} required type="text" placeholder="Descrição" value={descricao} onChange={e=> setDescricao(e.target.value)}></input>
-                    {loading ? <button type="submit">Salvar entrada</button>: 
-                    <button><ThreeDots color="#FFFFFF" height={20} width={50}/></button>}                  
+                    <IntlCurrencyInput
+                        disabled={inputState}
+                        currency="BRL"
+                        config={currencyConfig}
+                        value={valor}
+                        onChange={e => setValor(e.target.value)} />
+                    <input
+                        disabled={inputState} 
+                        required type="text" 
+                        placeholder="Descrição" 
+                        value={descricao} 
+                        onChange={e => setDescricao(e.target.value)}>
+                        </input>
+                    {loading ? <button type="submit">Salvar entrada</button> :
+                        <button><ThreeDots color="#FFFFFF" height={20} width={50} /></button>}
                 </InputFilds>
             </Box>
         </PageContainer>
@@ -86,13 +98,13 @@ display: flex;
 align-items: center;
 justify-content: center;
 `
-const Box= styled.div`
+const Box = styled.div`
 display: flex;
 flex-direction: column;
 height: 92vh;
 width: 90%;
 `
-const Header=styled.div`
+const Header = styled.div`
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 700;

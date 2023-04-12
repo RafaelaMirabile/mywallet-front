@@ -10,68 +10,68 @@ import dayjs from "dayjs";
 const currencyConfig = {
     locale: "pt-BR",
     formats: {
-      number: {
-        BRL: {
-          style: "currency",
-          currency: "BRL",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+        number: {
+            BRL: {
+                style: "currency",
+                currency: "BRL",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            },
         },
-      },
     },
-  };
+};
 
-export default function OutflowPage(){
-    
-    const{userToken,userId}=useContext(UserContext);
-    const navigate= useNavigate();  
-    const[valor,setValor]=useState("");
-    const [descricao,setDescricao]=useState("");
-    const [inputState,setInputState]=useState(false);
-    const [loading,setLoading]=useState(true);
-    
-    function outFlowRequest(e){
+export default function OutflowPage() {
+
+    const { userToken, userId } = useContext(UserContext);
+    const navigate = useNavigate();
+    const [valor, setValor] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [inputState, setInputState] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    function outFlowRequest(e) {
         e.preventDefault();
         setInputState(true);
         setLoading(false);
-        
-        const newValor = valor.split("").splice(3).filter(value=> value !== ",").join("");       
-        
-        const body ={
+
+        const newValor = valor.split("").splice(3).filter(value => value !== ",").join("");
+
+        const body = {
             token: userToken,
             userId: userId,
-            description : descricao,
+            description: descricao,
             value: newValor,
-            cashFlowType : 'outflow',
+            cashFlowType: 'outflow',
             date: dayjs().format('DD/MM')
         }
 
-        postOutflow(userToken,body).then(()=> {
+        postOutflow(userToken, body).then(() => {
             setValor("");
             setDescricao("");
             setInputState(false);
             setLoading(true);
             console.log(loading);
         })
-        .catch((error)=>{
-            setInputState(false);
-            console.error(error);
-            setLoading(true);
-            console.log(loading);        
-        });
+            .catch((error) => {
+                setInputState(false);
+                console.error(error);
+                setLoading(true);
+                console.log(loading);
+            });
     }
 
-    return(
+    return (
         <PageContainer>
             <Box>
                 <Header>
-                Nova saída
-                <ion-icon onClick={()=>{navigate('/cashflow')}} name="home"></ion-icon>
+                    Nova saída
+                    <ion-icon onClick={() => { navigate('/cashflow') }} name="home"></ion-icon>
                 </Header>
                 <InputFilds onSubmit={outFlowRequest}>
-                    <IntlCurrencyInput disabled={inputState} currency="BRL" config={currencyConfig} onChange={e=> setValor(e.target.value)} />
-                    <input disabled={inputState} required type="text" placeholder="Descrição" value={descricao} onChange={e=> setDescricao(e.target.value)}></input>
-                    {loading ? <button type="submit">Salvar saída</button>:<button><ThreeDots color="#FFFFFF" height={20} width={50}/></button>}                 
+                    <IntlCurrencyInput disabled={inputState} currency="BRL" config={currencyConfig} value={valor} onChange={e => setValor(e.target.value)} />
+                    <input disabled={inputState} required type="text" placeholder="Descrição" value={descricao} onChange={e => setDescricao(e.target.value)}></input>
+                    {loading ? <button type="submit">Salvar saída</button> : <button><ThreeDots color="#FFFFFF" height={20} width={50} /></button>}
                 </InputFilds>
             </Box>
         </PageContainer>
@@ -85,13 +85,13 @@ display: flex;
 align-items: center;
 justify-content: center;
 `
-const Box= styled.div`
+const Box = styled.div`
 display: flex;
 flex-direction: column;
 height: 92vh;
 width: 90%;
 `
-const Header=styled.div`
+const Header = styled.div`
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 700;

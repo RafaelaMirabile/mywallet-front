@@ -241,7 +241,7 @@ const Balance = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
-padding: 4px;
+padding: 20px;
 p{
     font-family: Raleway;
     font-style: normal;
@@ -269,10 +269,10 @@ text-align: center;
 color: #868686;
 padding: 110px;
 margin-top: 60px;
-border: 2px solid green;
 `
 const TransitionBox=styled.div`
 height: 440px;
+padding: 20px;
 `
 const TransitionInfo= styled.div`
 
