@@ -72,7 +72,6 @@ export default function LoginPage(){
 }
 
 const PageContainer= styled.div`
-border: 2px solid green;
 min-height: 100vh;
 background-image: linear-gradient( to top right,#441E5A,#483289 );
 display: flex;
