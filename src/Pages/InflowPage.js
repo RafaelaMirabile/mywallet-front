@@ -50,7 +50,6 @@ export default function InflowPage() {
 
         postInflow(userToken, body).then(() => {
             setValor("");
-            /* AQUI*/
             setDescricao("");
             setInputState(false);
             setLoading(true);

@@ -1,128 +1,143 @@
-import { useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import Swal from "sweetalert2";
 import UserContext from "../context/UserContext";
-import {getCashFlow} from "../service/API"
+import { getCashFlow } from "../service/API"
+import Modal from "../components/Modal";
 
-export default function CashFlowPage(){
+export default function CashFlowPage() {
 
-    const{userToken,userName}=useContext(UserContext);
+    const { userToken, userName } = useContext(UserContext);
     const navigate = useNavigate();
-    const [userTransitions,setUserTransitions]=useState([]);
-    const [balance,setBalance]=useState("");
-    const [balanceColor,setBalanceColor]=useState("");
-    const [loading, setLoading]=useState(true);
-    
-    useEffect(()=>{
-        
+
+    const [userTransitions, setUserTransitions] = useState([]);
+    const [balance, setBalance] = useState("");
+    const [balanceColor, setBalanceColor] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [isHidden, setIsHidden] = useState(true);
+    const [modalInfo, setModalInfo] = useState({});
+    const [reload, setReaload] = useState(false);
+
+    console.log(userTransitions);
+
+    useEffect(() => {
+
         getCashFlow(userToken).then((cash) => {
             setUserTransitions(cash.data);
             setLoading(false);
             const positive = cash.data.filter(value => value.cashFlowType === "inflow");
             const negative = cash.data.filter(value => value.cashFlowType === "outflow");
             let count = 0;
-            for(let i =0; i < positive.length; i++ ){
+            for (let i = 0; i < positive.length; i++) {
                 const number = parseFloat(positive[i].value).toFixed(2);
-                count += ((number)/100);
+                count += ((number) / 100);
             }
-            for(let i =0; i < negative.length; i++ ){
+            for (let i = 0; i < negative.length; i++) {
                 const number = parseFloat(negative[i].value).toFixed(2);
-                count -= ((number)/100) ;
+                count -= ((number) / 100);
             }
             const valueInBrasilCurrency = (new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(count));
             setBalance(valueInBrasilCurrency);
 
             const splitValue = valueInBrasilCurrency.split("");
-            if(splitValue[0]=== "-"){
+            if (splitValue[0] === "-") {
                 setBalanceColor(false);
             } else {
                 setBalanceColor(true);
             }
-            
-        }).catch((error)=>{
+
+        }).catch((error) => {
             console.error(error);
             Swal.fire({
                 icon: 'error',
                 title: '401',
                 text: 'Requisição não autorizada',
-              });
-              navigate("/");
+            });
+            navigate("/");
         });
-    },[])
+    }, [reload])
 
-    function exitSession(){
+    function exitSession() {
         Swal.fire({
             icon: 'info',
             title: 'Deseja encerrar a sessão?',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            cancelButtonText:'Não',
+            cancelButtonText: 'Não',
             confirmButtonText: 'Sim'
-        }).then((result)=>{
-            if(result.isConfirmed){
+        }).then((result) => {
+            if (result.isConfirmed) {
                 localStorage.clear();
-                window.location.href="/";
+                window.location.href = "/";
             }
         })
     }
-    
-    function reformattingTransitionValue(value){
-        const valueNumber = parseFloat((value/100)).toFixed(2);
+
+    function reformattingTransitionValue(value) {
+        const valueNumber = parseFloat((value / 100)).toFixed(2);
         const valueString = valueNumber.toString();
-        const transitionValue = valueString.replace(".",",");
+        const transitionValue = valueString.replace(".", ",");
         return (<>{transitionValue}</>)
     }
 
-    return(
+    return (
         <PageContainer>
             <Box>
+                <Modal
+                    isHidden={isHidden}
+                    setIsHidden={setIsHidden}
+                    modalInfo={modalInfo}
+                    setUserTransitions={setUserTransitions}
+                    setReaload={setReaload}
+                    reload={reload}
+                />
                 <Header>
-                   Olá, {userName}
-                   <ion-icon onClick={exitSession} name="exit-outline"></ion-icon>
+                    Olá, {userName}
+                    <ion-icon onClick={exitSession} name="exit-outline"></ion-icon>
                 </Header>
-                {loading ? <Loading><ThreeDots color="#FFFFFF" height={20} width={50}/></Loading> : 
+                {loading ? <Loading><ThreeDots color="#FFFFFF" height={20} width={50} /></Loading> :
                     <RegistrationBox>
-                        <TransitionBox>                    
-                           {userTransitions.length === 0 ? <Warning>Não há registros de entrada ou saída</Warning> :
-                            userTransitions.map((transition,index) =>
-                            <Transition key={index}>
-                                <TransitionInfo>
-                                    <span>{transition.date}</span>
-                                    <TransitionDescription>
-                                            {transition.description}
-                                    </TransitionDescription>                            
-                                </TransitionInfo>
-                                <TransitionValue style={transition.cashFlowType === 'inflow'? {color:"green"}: {color:"red"}}>
-                                    {reformattingTransitionValue(transition.value)}
-                                </TransitionValue>
-                            </Transition>
-                            )} 
-                        </TransitionBox>
-                            <Balance>
-                                <p>SALDO</p>
-                                <BalanceValue style={balanceColor ? {color:"green"}: {color:"red"}}>
-                                    {balance}
-                                </BalanceValue>
-                            </Balance>
+                        <Transitions>
+                            {userTransitions.length === 0 ? <Warning>Não há registros de entrada ou saída</Warning> :
+                                userTransitions.map((transition, index) =>
+                                    <Transition key={index} onClick={() => { setIsHidden(false); setModalInfo(transition) }}>
+                                        <TransitionInfo>
+                                            <span>{transition.date}</span>
+                                            <TransitionDescription>
+                                                {transition.description}
+                                            </TransitionDescription>
+                                        </TransitionInfo>
+                                        <TransitionValue style={transition.cashFlowType === 'inflow' ? { color: "green" } : { color: "red" }}>
+                                            {reformattingTransitionValue(transition.value)}
+                                        </TransitionValue>
+                                    </Transition>
+                                )}
+                        </Transitions>
+                        <Balance>
+                            <p>SALDO</p>
+                            <BalanceValue style={balanceColor ? { color: "green" } : { color: "red" }}>
+                                {balance}
+                            </BalanceValue>
+                        </Balance>
                     </RegistrationBox>
-                
+
                 }
                 <ActionsBox>
-                    <Inflow onClick={()=>{navigate("/inflow")}}>
+                    <Inflow onClick={() => { navigate("/inflow") }}>
                         <ion-icon name="add-circle-outline"></ion-icon>
                         <span>
                             <p>Nova</p>
                             <p>entrada</p>
                         </span>
                     </Inflow>
-                    <Outflow onClick={()=>{navigate("/outflow")}}>
+                    <Outflow onClick={() => { navigate("/outflow") }}>
                         <ion-icon name="remove-circle-outline"></ion-icon>
                         <span>
                             <p>Nova</p>
-                            <p>saída</p> 
+                            <p>saída</p>
                         </span>
                     </Outflow>
                 </ActionsBox>
@@ -131,7 +146,7 @@ export default function CashFlowPage(){
     )
 }
 
-const PageContainer=styled.div`
+const PageContainer = styled.div`
 min-height: 100vh;
 background-image: linear-gradient( to top right,#441E5A,#483289 );
 display: flex;
@@ -144,6 +159,14 @@ flex-direction: column;
 justify-content: space-between;
 height: 92vh;
 width: 90%;
+border: 2px solid red;
+`
+const Transitions = styled.div`
+max-height: 350px;
+overflow-y: scroll;
+ion-icon{
+    color: #C6C6C6;
+}
 `
 const Header = styled.div`
 font-family: 'Raleway';
@@ -168,12 +191,13 @@ margin-bottom: 6px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
+padding: 20px;
 `
-const ActionsBox=styled.div`
+const ActionsBox = styled.div`
 display: flex;
 justify-content: space-around;
 `
-const Inflow=styled.div`
+const Inflow = styled.div`
 width: 155px;
 height: 114px;
 margin-right: 10px;
@@ -195,7 +219,7 @@ ion-icon{
     font-size: 30px;
 }
 `
-const Outflow=styled.div`
+const Outflow = styled.div`
 width: 155px;
 height: 114px;
 background: #483289;
@@ -222,15 +246,16 @@ display: flex;
 justify-content: space-between;
 padding: 4px;
 `
-const TransitionDescription=styled.div`
+const TransitionDescription = styled.div`
 font-family: Raleway;
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 19px;
 color: #000000;
+margin-left: 6px;
 `
-const TransitionValue=styled.div`
+const TransitionValue = styled.div`
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 400;
@@ -241,7 +266,7 @@ const Balance = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
-padding: 20px;
+margin-top: 10px;
 p{
     font-family: Raleway;
     font-style: normal;
@@ -251,7 +276,7 @@ p{
     color: #000000;
 }
 `
-const BalanceValue=styled.div`
+const BalanceValue = styled.div`
 font-family: Raleway;
 font-style: normal;
 font-weight: 400;
@@ -259,7 +284,7 @@ font-size: 17px;
 line-height: 20px;
 text-align: right;
 `
-const Warning=styled.div`
+const Warning = styled.div`
 font-family: Raleway;
 font-style: normal;
 font-weight: 400;
@@ -270,11 +295,12 @@ color: #868686;
 padding: 110px;
 margin-top: 60px;
 `
-const TransitionBox=styled.div`
+const TransitionBox = styled.div`
 height: 440px;
 padding: 20px;
+border: 2px solid gray;
 `
-const TransitionInfo= styled.div`
+const TransitionInfo = styled.div`
 
 display: flex;
 justify-content: center;
