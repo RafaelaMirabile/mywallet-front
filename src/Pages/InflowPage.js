@@ -36,6 +36,7 @@ export default function InflowPage() {
         e.preventDefault();
         setInputState(true);
         setLoading(false);
+        console.log(valor);
 
         const newValor = valor.split("").splice(3).filter(value => value !== ",").join("");
 
@@ -74,14 +75,16 @@ export default function InflowPage() {
                         currency="BRL"
                         config={currencyConfig}
                         value={valor}
-                        onChange={e => setValor(e.target.value)} />
+                        onChange={e => setValor(e.target.value)}
+                    />
                     <input
-                        disabled={inputState} 
-                        required type="text" 
-                        placeholder="Descrição" 
-                        value={descricao} 
+                        disabled={inputState}
+                        required 
+                        type="text"
+                        placeholder="Descrição"
+                        value={descricao}
                         onChange={e => setDescricao(e.target.value)}>
-                        </input>
+                    </input>
                     {loading ? <button type="submit">Salvar entrada</button> :
                         <button><ThreeDots color="#FFFFFF" height={20} width={50} /></button>}
                 </InputFilds>

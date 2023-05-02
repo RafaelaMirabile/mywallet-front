@@ -295,13 +295,7 @@ color: #868686;
 padding: 110px;
 margin-top: 60px;
 `
-const TransitionBox = styled.div`
-height: 440px;
-padding: 20px;
-border: 2px solid gray;
-`
 const TransitionInfo = styled.div`
-
 display: flex;
 justify-content: center;
 align-items: center;

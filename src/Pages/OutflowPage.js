@@ -30,6 +30,8 @@ export default function OutflowPage() {
     const [inputState, setInputState] = useState(false);
     const [loading, setLoading] = useState(true);
 
+    console.log(valor);
+
     function outFlowRequest(e) {
         e.preventDefault();
         setInputState(true);
@@ -51,13 +53,11 @@ export default function OutflowPage() {
             setDescricao("");
             setInputState(false);
             setLoading(true);
-            console.log(loading);
         })
             .catch((error) => {
                 setInputState(false);
                 console.error(error);
                 setLoading(true);
-                console.log(loading);
             });
     }
 
@@ -69,8 +69,18 @@ export default function OutflowPage() {
                     <ion-icon onClick={() => { navigate('/cashflow') }} name="home"></ion-icon>
                 </Header>
                 <InputFilds onSubmit={outFlowRequest}>
-                    <IntlCurrencyInput disabled={inputState} currency="BRL" config={currencyConfig} value={valor} onChange={e => setValor(e.target.value)} />
-                    <input disabled={inputState} required type="text" placeholder="Descrição" value={descricao} onChange={e => setDescricao(e.target.value)}></input>
+                    <IntlCurrencyInput
+                        disabled={inputState}
+                        currency="BRL"
+                        config={currencyConfig}
+                        value={valor}
+                        onChange={e => setValor(e.target.value)} 
+                        />
+                    <input
+                        disabled={inputState}
+                        required type="text"
+                        placeholder="Descrição" value={descricao}
+                        onChange={e => setDescricao(e.target.value)}></input>
                     {loading ? <button type="submit">Salvar saída</button> : <button><ThreeDots color="#FFFFFF" height={20} width={50} /></button>}
                 </InputFilds>
             </Box>

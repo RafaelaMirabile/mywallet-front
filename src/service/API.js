@@ -53,4 +53,16 @@ function deleteTransaction(id, userToken){
     return promise
 }
 
-export{postLogin, postSignUp,getCashFlow,postInflow,postOutflow, deleteTransaction}
+function updateTransaction(id, userToken, body){
+    console.log("api",body)
+    const config ={
+        headers:{
+            Authorization : `Bearer ${userToken}`
+        }
+    }
+    
+    const promise = axios.put(`${URL_BASE}/cashflow/${id}/`,body,config);
+    return promise
+}
+
+export{postLogin, postSignUp,getCashFlow,postInflow,postOutflow, deleteTransaction, updateTransaction}
