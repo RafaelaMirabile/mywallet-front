@@ -2,11 +2,11 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserContext from "./context/UserContext";
 import GlobalStyle from "./globalStyles";
-import CashFlowPage from "./Pages/CashFlowPage";
-import InflowPage from "./Pages/InflowPage";
-import LoginPage from "./Pages/LoginPage";
-import OutflowPage from "./Pages/OutflowPage";
-import SignUpPage from "./Pages/SignUpPage";
+import InflowPage from "./pages/InflowPage";
+import LoginPage from "./pages/LoginPage";
+import OutflowPage from "./pages/OutflowPage";
+import SignUpPage from "./pages/SignUpPage";
+import HomePage from "./pages/HomePage";
 
 export default function App(){
     
@@ -26,7 +26,7 @@ export default function App(){
                 <Routes>
                     <Route path="/" element={<LoginPage/>}/>
                     <Route path="/sign-up" element={<SignUpPage/>}/>
-                    <Route path="/cashflow" element={<CashFlowPage/>}/>
+                    <Route path="/home" element={<HomePage/>}/>
                     <Route path="/inflow" element={<InflowPage/>}/>
                     <Route path="/outflow" element={<OutflowPage/>}/>
                 </Routes>

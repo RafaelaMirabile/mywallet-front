@@ -54,7 +54,6 @@ function deleteTransaction(id, userToken){
 }
 
 function updateTransaction(id, userToken, body){
-    console.log("api",body)
     const config ={
         headers:{
             Authorization : `Bearer ${userToken}`
