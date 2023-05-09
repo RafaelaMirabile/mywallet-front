@@ -134,7 +134,7 @@ export default function HomePage() {
                             </>
                         }
                     </H.TransitionsBox>
-                    {loading ? <></> :
+                    {userTransitions.length === 0 ? <></> :
                         <H.Balance>
                             <p>SALDO</p>
                             <H.BalanceValue style={balanceColor ? { color: "green" } : { color: "red" }}>

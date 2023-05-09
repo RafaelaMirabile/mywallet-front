@@ -103,9 +103,12 @@ export default function Modal({ isHidden, setIsHidden, modalInfo, reload, setRea
 				title: 'Registro modificado com sucesso!',
 				confirmButtonColor: '#191970',
 			});
+			setIsDisabled(false);
+			setDisplayBox(false);
+			setDisplayUpdate(true);
 			setReaload(!reload);
-			setIsHidden(true);
 			setData({ description: '', value: '', cashFlowType: '' });
+			setIsHidden(true);
 		}).catch((err) => {
 			console.log(err)
 		})
