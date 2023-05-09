@@ -27,7 +27,7 @@ export default function HomePage() {
             balanceValueAndColor(cash.data);
 
         }).catch((error) => {
-            console.error(error);
+            console.error(error.message);
             Swal.fire({
                 icon: 'error',
                 title: 'Tivemos um problema no servidor, tente novamente mais tarde.',
