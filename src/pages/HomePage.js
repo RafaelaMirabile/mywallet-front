@@ -103,44 +103,45 @@ export default function HomePage() {
                     Olá, {userName}
                     <ion-icon onClick={exitSession} name="exit-outline"></ion-icon>
                 </H.Header>
-                {loading
-                    ?
-                    <H.Loading><ThreeDots color="#FFFFFF" height={20} width={50} /></H.Loading>
-                    :
-                    <H.RegistrationBox>
-                        {userTransitions.length === 0 ? <></> : <H.Info>Clique no registro para mais informações</H.Info>}
-                        <H.TransitionsBox userTransitions={userTransitions.length}>
-                            {userTransitions.length === 0
-                                ?
-                                <H.Warning>Não há registros de entrada ou saída</H.Warning>
-                                :
-                                userTransitions.map((transition, index) => (
-                                    <H.Transition key={index} onClick={() => { setIsHidden(false); setModalInfo(transition) }}>
-                                        <H.TransitionInfo>
-                                            <span>{transition.date}</span>
-                                            <H.TransitionDescription>
-                                                {transition.description}
-                                            </H.TransitionDescription>
-                                        </H.TransitionInfo>
-                                        <H.TransitionValue style={transition.cashFlowType === 'inflow' ? { color: "green" } : { color: "red" }}>
-                                            <ReformatedTransitionValue
-                                                transition={transition.value}
-                                            />
-                                        </H.TransitionValue>
-                                    </H.Transition>
-                                )
-                                )
-                            }
-                        </H.TransitionsBox>
+                <H.RegistrationBox>
+                    {userTransitions.length === 0 ? <></> : <H.Info>Clique no registro para mais informações</H.Info>}
+                    <H.TransitionsBox userTransitions={userTransitions.length}>
+                        {loading ? <H.Loading><ThreeDots color="#FFFFFF" height={20} width={50} /></H.Loading> :
+                            <>
+                                {
+                                    userTransitions.length === 0
+                                        ?
+                                        <H.Warning>Não há registros de entrada ou saída</H.Warning>
+                                        :
+                                        userTransitions.map((transition, index) => (
+                                            <H.Transition key={index} onClick={() => { setIsHidden(false); setModalInfo(transition) }}>
+                                                <H.TransitionInfo>
+                                                    <span>{transition.date}</span>
+                                                    <H.TransitionDescription>
+                                                        {transition.description}
+                                                    </H.TransitionDescription>
+                                                </H.TransitionInfo>
+                                                <H.TransitionValue style={transition.cashFlowType === 'inflow' ? { color: "green" } : { color: "red" }}>
+                                                    <ReformatedTransitionValue
+                                                        transition={transition.value}
+                                                    />
+                                                </H.TransitionValue>
+                                            </H.Transition>
+                                        )
+                                        )
+
+                                }
+                            </>
+                        }
+                    </H.TransitionsBox>
+                    {loading ? <></> :
                         <H.Balance>
                             <p>SALDO</p>
                             <H.BalanceValue style={balanceColor ? { color: "green" } : { color: "red" }}>
                                 {balance}
                             </H.BalanceValue>
-                        </H.Balance>
-                    </H.RegistrationBox>
-
-                }
+                        </H.Balance>}
+                </H.RegistrationBox>
                 <H.ActionsBox>
                     <H.Button onClick={() => { navigate("/inflow") }}>
                         <ion-icon name="add-circle-outline"></ion-icon>
