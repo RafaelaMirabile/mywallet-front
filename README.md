@@ -1,4 +1,3 @@
-# Getting Started with Create React App
 <h1 align="center">
    💰 <a href="#"> MyWallet </a>
 </h1>
