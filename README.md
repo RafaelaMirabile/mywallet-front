@@ -50,7 +50,7 @@ This project is divided into two parts:
 ## Pre-requisites
 
 Before you begin, you will need to have the following tools installed on your machine:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [VSCode](https://code.visualstudio.com/).
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [VSCode](https://code.visualstudio.com/), [MongoDB](https://www.mongodb.com/docs/manual/installation/).
 
 ### Running the Frontend
 
@@ -71,11 +71,7 @@ $ npm install
 // Run the application in development mode
 $ npm start
 
-// The server will start at port: 5000
-
-```
-
-You can find an .env.example <a href="https://github.com/okitauehara/my-wallet/blob/main/.env.example">here</a>.
+// The server will start at port: 5000 on localhost.
 
 ---
 
