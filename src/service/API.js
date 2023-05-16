@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const URL_BASE = process.env.REACT_APP_URL_BASE;
+console.log(URL_BASE);
 
 function postSignUp(body){
     const promise = axios.post(`${URL_BASE}/signup`,body);
