@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_BASE = process.env.REACT_APP_URL_BASE;
+const URL_BASE = 'https://mywallet-back-delta.vercel.app';
 console.log(URL_BASE);
 
 function postSignUp(body){
