@@ -73,6 +73,13 @@ export default function OutflowPage() {
                 navigate('/home');
             })
                 .catch((error) => {
+                    console.log(error.response);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro no servidor',
+                        text: 'Por favor tente mais tarde',
+                        confirmButtonColor: '#483289'
+                    });
                     setInputState(false);
                     console.error(error);
                     setLoading(true);

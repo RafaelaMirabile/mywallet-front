@@ -74,6 +74,13 @@ export default function InflowPage() {
                   navigate('/home');
             })
                 .catch((error) => {
+                    console.log(error.response);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro no servidor',
+                        text: 'Por favor tente mais tarde',
+                        confirmButtonColor: '#483289'
+                    });
                     setInputState(false);
                     setLoading(true);
                     console.error(error);

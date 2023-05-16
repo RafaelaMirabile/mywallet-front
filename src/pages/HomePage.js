@@ -27,10 +27,11 @@ export default function HomePage() {
             balanceValueAndColor(cash.data);
 
         }).catch((error) => {
-            console.error(error.message);
+            console.error(error.response);
             Swal.fire({
                 icon: 'error',
-                title: 'Tivemos um problema no servidor, tente novamente mais tarde.',
+                title: 'Erro no servidor',
+                text: 'Por favor tente mais tarde',
                 confirmButtonColor: '#483289'
             });
             navigate("/");

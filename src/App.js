@@ -25,7 +25,7 @@ export default function App(){
             <GlobalStyle/>
                 <Routes>
                     <Route path="/" element={<LoginPage/>}/>
-                    <Route path="/sign-up" element={<SignUpPage/>}/>
+                    <Route path="/signup" element={<SignUpPage/>}/>
                     <Route path="/home" element={<HomePage/>}/>
                     <Route path="/inflow" element={<InflowPage/>}/>
                     <Route path="/outflow" element={<OutflowPage/>}/>

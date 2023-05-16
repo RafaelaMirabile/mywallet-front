@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const URL_BASE = 'http://localhost:5000'
+const URL_BASE = process.env.REACT_APP_URL_BASE;
 
 function postSignUp(body){
-    const promise = axios.post(`${URL_BASE}/sign-up`,body);
+    const promise = axios.post(`${URL_BASE}/signup`,body);
     return promise;
 }
 
 function postLogin(body){
-    const promise = axios.post(`${URL_BASE}`,body);
+    const promise = axios.post(`${URL_BASE}/login`,body);
     return promise;
 }
 
@@ -42,7 +42,6 @@ function postOutflow(userToken,body){
 }
 
 function deleteTransaction(id, userToken){
-
     const config ={
         headers:{
             Authorization : `Bearer ${userToken}`

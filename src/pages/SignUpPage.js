@@ -47,14 +47,21 @@ export default function SignUpPage() {
             navigate("/");
         })
             .catch((error) => {
-                console.log(error.response);
-                const errorStatus = error.response.data;
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Cadastro Inválido',
-                    text: `Houve algum erro durante o cadastro :( 
-                    ${errorStatus} `,
-                });
+                if (error.response.status === 422) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Cadastro Inválido',
+                        text: `${error.response.data}`,
+                        confirmButtonColor: '#483289'
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro no servidor',
+                        text: 'Por favor tente mais tarde',
+                        confirmButtonColor: '#483289'
+                    })
+                }
                 setUserEmail("");
                 setUser("");
                 setUserPassword("");

@@ -30,22 +30,41 @@ export default function LoginPage() {
             setUserPassword("");
             setInputState(false);
 
-            if ((userName === null && userId === null && userToken === null)) {
-                localStorage.setItem("userToken", session.data.token);
-                setUserToken(session.data.token);
-                localStorage.setItem("userId", session.data.userId);
-                setUserId(session.data.userId);
-                localStorage.setItem("userName", session.data.userName);
-                setUserName(session.data.userName);
-            }
+            localStorage.setItem("userToken", session.data.token);
+            setUserToken(session.data.token);
+            localStorage.setItem("userId", session.data.userId);
+            setUserId(session.data.userId);
+            localStorage.setItem("userName", session.data.userName);
+            setUserName(session.data.userName);
+            
             navigate('/home');
         }).catch((error) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ops...',
-                text: 'Usuário e/ou senha incorretos!',
-                confirmButtonColor: '#483289',
-            });
+            console.log(error.response);
+            if(error.response.data === "User not found in db"){
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Primeira vez? ',
+                    text: 'Inscreva-se!',
+                    confirmButtonColor: '#483289',
+                });
+                navigate('/signup');
+            }
+            else if (error.response.status === 401) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops...',
+                    text: 'Usuário e/ou senha incorretos!',
+                    confirmButtonColor: '#483289',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro no servidor',
+                    text: 'Por favor tente mais tarde',
+                    confirmButtonColor: '#483289'
+                });
+            }
+
             setUserEmail("");
             setUserPassword("");
             setLoading(true);
@@ -62,7 +81,7 @@ export default function LoginPage() {
                     <input required disabled={inputState} type="password" placeholder="Senha" value={password} onChange={e => setUserPassword(e.target.value)}></input>
                     {loading ? <button type="submit">Entrar</button> : <button><ThreeDots color="#FFFFFF" height={20} width={50} /></button>}
                 </L.InputFilds>
-                <L.LinkToSignUpPage to="/sign-up">Primeira vez? Cadastre-se!</L.LinkToSignUpPage>
+                <L.LinkToSignUpPage to="/signup">Primeira vez? Cadastre-se!</L.LinkToSignUpPage>
             </L.Box>
         </L.PageContainer>
     )
