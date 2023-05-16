@@ -37,7 +37,7 @@ export default function Modal({ isHidden, setIsHidden, modalInfo, reload, setRea
 			setReaload(!reload);
 			setIsHidden(true);
 		}).catch((err) => {
-			console.log(err);
+			console.log(err.response);
 		})
 	}
 
@@ -110,7 +110,7 @@ export default function Modal({ isHidden, setIsHidden, modalInfo, reload, setRea
 			setData({ description: '', value: '', cashFlowType: '' });
 			setIsHidden(true);
 		}).catch((err) => {
-			console.log(err)
+			console.log(err.response);
 		})
 	}
 
