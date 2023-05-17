@@ -42,7 +42,7 @@ This layout was inspired by <a href="https://www.figma.com/file/p37uJdpZWRLED7YE
 ## How it works
 
 This project is divided into two parts:
-1. Backend (You can find here:https://github.com/RafaelaMirabile/projeto13-mywallet-back)
+1. Backend (You can find here:https://github.com/RafaelaMirabile/mywallet-back)
 2. Frontend (This repository)
 
 ---
@@ -58,7 +58,7 @@ Before you begin, you will need to have the following tools installed on your ma
 ``` jsx
 
 // Clone this repository
-$ git clone git@github.com:RafaelaMirabile/mywallet-front.git
+$ git clone git@github.com:okitauehara/my-wallet.git
 
 // Access the project folder cmd/terminal
 $ cd my-wallet
@@ -71,7 +71,11 @@ $ npm install
 // Run the application in development mode
 $ npm start
 
-// The server will start at port: 5000 on localhost.
+// The server will start at port: 3000
+
+```
+
+You can find an .env.example <a href="https://github.com/okitauehara/my-wallet/blob/main/.env.example">here</a>.
 
 ---
 
