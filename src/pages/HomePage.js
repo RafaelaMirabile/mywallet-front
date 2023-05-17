@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { ThreeDots } from "react-loader-spinner"
+import { Circles } from "react-loader-spinner"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import UserContext from "../context/UserContext"
@@ -104,10 +104,10 @@ export default function HomePage() {
                     Olá, {userName}
                     <ion-icon onClick={exitSession} name="exit-outline"></ion-icon>
                 </H.Header>
-                <H.RegistrationBox>
+                <H.RegistrationBox loading={loading}>
                     {userTransitions.length === 0 ? <></> : <H.Info>Clique no registro para mais informações</H.Info>}
                     <H.TransitionsBox userTransitions={userTransitions.length}>
-                        {loading ? <H.Loading><ThreeDots color="#FFFFFF" height={20} width={50} /></H.Loading> :
+                        {loading ? <H.Loading><Circles color="#483289" height={100} width={70} /></H.Loading> :
                             <>
                                 {
                                     userTransitions.length === 0

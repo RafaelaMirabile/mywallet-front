@@ -48,7 +48,7 @@ border-radius: 5px;
 margin-bottom: 6px;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content:${(props)=> props.loading === 0 ? 'center' : 'justify-content'};
 padding: 20px;
 `
 export const ActionsBox = styled.div`
