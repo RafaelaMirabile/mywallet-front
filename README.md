@@ -58,7 +58,7 @@ Before you begin, you will need to have the following tools installed on your ma
 ``` jsx
 
 // Clone this repository
-$ git clone git@github.com:okitauehara/my-wallet.git
+$ git clone git@github.com:RafaelaMirabile/mywallet-front.git
 
 // Access the project folder cmd/terminal
 $ cd my-wallet
