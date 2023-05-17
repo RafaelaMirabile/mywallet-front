@@ -42,7 +42,7 @@ This layout was inspired by <a href="https://www.figma.com/file/p37uJdpZWRLED7YE
 ## How it works
 
 This project is divided into two parts:
-1. Backend (You can find here:https://github.com/RafaelaMirabile/projeto13-mywallet-back)
+1. Backend (You can find here:https://github.com/RafaelaMirabile/mywallet-back)
 2. Frontend (This repository)
 
 ---
@@ -66,12 +66,15 @@ $ cd my-wallet
 // Install the dependencies
 $ npm install
 
-// If you want to run your app on localhost, create a .env file with the environment variable pointing to your local server.
+// If you want to run your app on localhost, create a .env file (same as the env.example) with the environment variable pointing to your local server.
 
 // Run the application in development mode
 $ npm start
 
-// The server will start at port: 5000 on localhost.
+// The server will start at port: 3000
+
+```
+
 
 ---
 
