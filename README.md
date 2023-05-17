@@ -66,7 +66,7 @@ $ cd my-wallet
 // Install the dependencies
 $ npm install
 
-// If you want to run your app on localhost, create a .env file with the environment variable pointing to your local server.
+// If you want to run your app on localhost, create a .env file (same as the env.example) with the environment variable pointing to your local server.
 
 // Run the application in development mode
 $ npm start
@@ -75,7 +75,6 @@ $ npm start
 
 ```
 
-You can find an .env.example <a href="https://github.com/okitauehara/my-wallet/blob/main/.env.example">here</a>.
 
 ---
 
