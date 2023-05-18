@@ -35,6 +35,7 @@ Aimed at bringing the financial notepad into the virtual world, MyWallet is perf
 </div>
 
 
+
 This layout was inspired by <a href="https://www.figma.com/file/p37uJdpZWRLED7YEwDFfUd/MyWallet?node-id=0%3A1">this</a> Figma prototype.
 
 
