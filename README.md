@@ -50,7 +50,7 @@ This project is divided into two parts:
 ## Pre-requisites
 
 Before you begin, you will need to have the following tools installed on your machine:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [VSCode](https://code.visualstudio.com/), [MongoDB](https://www.mongodb.com/docs/manual/installation/).
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [VSCode](https://code.visualstudio.com/).
 
 ### Running the Frontend
 
